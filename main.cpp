@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <random>
 #include <cmath>
 #include <vector>
@@ -129,9 +130,13 @@ int main()
     std::cout << "Transmitted Count: " << transmittedCount << std::endl;
     std::cout << "Reflected Count: " << reflectedCount << std::endl;
 
+    std::ofstream outFile("deposit_profile.csv");
+    outFile << "bin_index,bin_start_cm,bin_end_cm,energy_mev\n";
+
     for (int b = 0; b < numBins; ++b)
     {
         std::cout << "Bin [" << b * binWidth << ", " << (b + 1) * binWidth << ") cm: " << energyDeposit[b] << " MeV\n";
+        outFile << b << "," << b * binWidth << "," << (b + 1) * binWidth << "," << energyDeposit[b] << "\n";
     }
 
     return 0;
