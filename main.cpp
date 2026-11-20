@@ -1,22 +1,9 @@
+#include "transport.hpp"
 #include <iostream>
 #include <fstream>
 #include <random>
 #include <cmath>
 #include <vector>
-
-enum class CollisionType
-{
-    Absorbed,
-    Scattered
-};
-
-enum class StepOutcome
-{
-    Scattered,
-    Reflected,
-    Transmitted,
-    Absorbed
-};
 
 static std::uniform_real_distribution<double>
     dist(0.0, 1.0);
