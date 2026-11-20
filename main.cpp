@@ -80,11 +80,11 @@ int main()
     int direction;
     double neutronEnergy;
 
-    int numBins = 10;
+    int numBins = 100000;
     double binWidth = slabThickness / numBins;
     std::vector<double> energyDeposit(numBins, 0.0);
 
-    int numNeutrons = 1000;
+    int numNeutrons = 100000;
     int absorbedCount = 0;
     int transmittedCount = 0;
     int reflectedCount = 0;
@@ -135,7 +135,7 @@ int main()
 
     for (int b = 0; b < numBins; ++b)
     {
-        std::cout << "Bin [" << b * binWidth << ", " << (b + 1) * binWidth << ") cm: " << energyDeposit[b] << " MeV\n";
+        // std::cout << "Bin [" << b * binWidth << ", " << (b + 1) * binWidth << ") cm: " << energyDeposit[b] << " MeV\n";
         outFile << b << "," << b * binWidth << "," << (b + 1) * binWidth << "," << energyDeposit[b] << "\n";
     }
 

@@ -10,7 +10,7 @@ with open("deposit_profile.csv", newline="") as f:
         starts.append(float(row["bin_start_cm"]))
         energies.append(float(row["energy_mev"]))
 
-    plt.bar(starts, energies, width=1.0, align="edge", edgecolor="blue")
+    plt.step(starts, energies, where="post", color="yellow")
     plt.xlabel("Depth in Slab (cm)")
     plt.ylabel("Deposited Energy (MeV)")
     plt.title("1D Neutron Energy Deposition Profile")
