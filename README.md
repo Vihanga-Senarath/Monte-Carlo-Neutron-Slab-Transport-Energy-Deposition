@@ -2,6 +2,14 @@
 
 A C++ Monte Carlo prototype simulating 1D neutron transport through a finite slab (`[0.0, slabThickness]`), tracking particle outcomes (**Absorbed**, **Transmitted**, **Reflected**) and spatial energy deposition across depth bins as part of the **Neutron Deposit Study** capstone.
 
+## Project Structure
+
+- `config.hpp` - `SimulationConfig` struct holding slab geometry, cross sections, neutron energy, binning, particle count, and output CSV path.
+- `transport.hpp` / `transport.cpp` - Core Monte Carlo transport routines (`sampleFreePath`, `handleCollision`, `stepNeutron`) and collision/step outcome enums.
+- `io.hpp` / `io.cpp` - CSV output writer (`writeDepositProfileCsv`) formatting `bin_index,bin_start_cm,bin_end_cm,energy_mev`.
+- `main.cpp` - Simulation setup, neutron history loop, outcome tallies, and I/O orchestration.
+- `plot_deposit.py` - Python visualization script using `csv.DictReader` and `matplotlib` `plt.step(..., where="post")` to inspect energy deposition profiles.
+
 ## What This Prototype Models
 
 - **Exponential Free-Path Sampling (`sampleFreePath`)**: Draws step lengths $s = -\ln(r) / \Sigma_t$ with $r \in (0.0, 1.0]$ using `std::mt19937_64` and a uniform real distribution.
