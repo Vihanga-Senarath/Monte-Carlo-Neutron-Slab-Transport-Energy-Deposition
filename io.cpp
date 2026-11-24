@@ -1,6 +1,6 @@
 #include "io.hpp"
 #include <algorithm> // std::min
-#include <cctype> // std::isspace
+#include <cctype>    // std::isspace
 #include <fstream>
 #include <iostream>
 
@@ -201,4 +201,54 @@ bool loadEndfMf3Table(const std::string &filename, int targetMt, std::vector<Cro
     }
 
     return !outPoints.empty();
+}
+
+double interpolateSigmaBarns(const std::vector<CrossSectionPoint> &table,
+                             double energyEv)
+{
+    if (table.empty())
+    {
+        return 0.0;
+    }
+
+    if (energyEv <= table.front().energyEv)
+    {
+        return table.front().crossSectionBarns;
+    }
+
+    if (energyEv >= table.back().energyEv)
+    {
+        return table.back().crossSectionBarns;
+    }
+
+    const auto it = std::lower_bound(
+        table.begin(),
+        table.end(),
+        energyEv,
+        [](const CrossSectionPoint &pt, double targetEnergy)
+        {
+            return pt.energyEv < targetEnergy;
+        });
+
+    if (it == table.begin())
+    {
+        return table.front().crossSectionBarns;
+    }
+
+    if (it == table.end())
+    {
+        return table.back().crossSectionBarns;
+    }
+
+    const CrossSectionPoint &high = *it;
+    const CrossSectionPoint &low = *(it - 1);
+    const double dE = high.energyEv - low.energyEv;
+
+    if (dE <= 0.0)
+    {
+        return low.crossSectionBarns;
+    }
+
+    const double fraction = (energyEv - low.energyEv) / dE;
+    return low.crossSectionBarns + fraction * (high.crossSectionBarns - low.crossSectionBarns);
 }

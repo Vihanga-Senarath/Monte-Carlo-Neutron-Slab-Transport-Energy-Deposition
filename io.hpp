@@ -12,3 +12,5 @@ struct CrossSectionPoint
 bool writeDepositProfileCsv(const std::string &filename, double slabThickness, const std::vector<double> &energyDeposit);
 
 bool loadEndfMf3Table(const std::string &filename, int targetMt, std::vector<CrossSectionPoint> &outPoints);
+
+double interpolateSigmaBarns(const std::vector<CrossSectionPoint> &table, double energyEv);
